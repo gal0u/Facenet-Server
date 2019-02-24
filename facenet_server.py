@@ -46,11 +46,17 @@ argparser.add_argument(
     '--lite',
     action='store_true',
     help='use tf lite')
+argparser.add_argument(
+	'-p',
+	'--port',
+	default=5000,
+	help='sever port')
+
 
 
 def _main_(args):	
 	face_recognition = face.Recognition()
-	
+	port = args.port
     # config_path  = args.conf
     # weights_path = args.weights
     # image_path   = args.input
@@ -136,7 +142,7 @@ def _main_(args):
 
 
 	# start flask app
-	app.run(host="0.0.0.0", port=5000)
+	app.run(host="0.0.0.0", port=port)
 
 if __name__ == '__main__':
     args = argparser.parse_args()
