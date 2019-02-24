@@ -73,17 +73,14 @@ def get_facenet_results(image, face_recognition, output_image=False):
 	# ret, frame = video_capture.read()
 
 	faces = face_recognition.identify(image)
-	names = []
+
 	bounding_boxes = []
 
 	for f in faces :
-		bounding_boxes.append(f.bounding_box.tolist())
-		names.append(f.name)
-		
-	print(type(bounding_boxes[0]))
-	
-	output_dict = {'names_list':names, 'bounding_boxes_list':bounding_boxes}
-	json_object = json.dumps(output_dict)
+		bounding_boxes.append({ "bb": f.bounding_box.tolist(), "name": f.name, "proba": f.proba })
+
+
+	json_object = json.dumps(bounding_boxes)
 	
 	with io.open('data.json', 'w', encoding='utf-8') as f:
 		f.write(json_object)
@@ -99,11 +96,11 @@ def get_facenet_results(image, face_recognition, output_image=False):
 	if output_image == True:
 		add_overlays(image, faces)
 
-		output_dict = {'names_list':names, 'bounding_boxes_list':bounding_boxes}
+		#output_dict = {'names_list':names, 'bounding_boxes_list':bounding_boxes}
 		
 		return json_object, image
 	
-	output_dict = {'names_list':names, 'bounding_boxes_list':bounding_boxes}
+	#output_dict = {'names_list':names, 'bounding_boxes_list':bounding_boxes}
 	# output_dict = {names_list:names, bounding_boxes_list:bounding_boxes}
 	return json_object
 	# frame_count += 1

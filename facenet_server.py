@@ -18,6 +18,8 @@ import json
 from flask import Flask, request, Response
 import tensorflow as tf
 
+from image_face_recognition import get_facenet_results
+
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
@@ -98,16 +100,16 @@ def _main_(args):
 		with graph.as_default():
 			output_image = False
 			out_dict = get_facenet_results(img, face_recognition , output_image = output_image)
-			if output_image == True:
-				json_out = out_dict[0]
-				image_out = out_dict[1]
+#			if output_image == True:
+#				json_out = out_dict[0]
+#				image_out = out_dict[1]
 				# cv2.imshow('image',image_out)
 				# cv2.waitKey(0)
-			else:
-				json_out = out_dict[0]
+#			else:
+			json_out = out_dict
 
-			json_data = json.loads(json_out)
-			boxes = yolo.predict(img)
+			#json_data = json.loads(json_out)
+			#boxes = yolo.predict(img)
 
 
 		# build a response dict to send back to client
